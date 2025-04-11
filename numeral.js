@@ -187,7 +187,15 @@ var numeralFactory = function () {
     function formatPercentage (n, format, roundingFunction) {
         var space = '',
             output,
+            value;
+
+        // check for escaped %% to determine scale
+        if (format.indexOf('%%') > -1) {
+            value = n._value;
+            format = format.replace('%%','%')
+        } else {
             value = n._value * 100;
+        }
 
         // check for space before %
         if (format.indexOf(' %') > -1) {
